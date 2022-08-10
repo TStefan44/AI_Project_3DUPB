@@ -98,7 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e126d1d74d9f01547b6cbd121b2b1632, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeToGrow: 2
+  timeToGrow: 10
   initialSize: 1
   endSize: 25
 --- !u!54 &8496281362288482672

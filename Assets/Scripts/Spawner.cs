@@ -19,14 +19,17 @@ public class Spawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // maximum objects spawned
         if (curentNumberOfObjectsToSpawn == numberOfObjectsToSpawn)
         {
             return;
         }
+        // cooldown time
         if (currentTimeToSpawn > 0)
         {
             currentTimeToSpawn -= Time.deltaTime;
-        } 
+        }
+        // spawn new object
         else
         {
             currentTimeToSpawn = timeToSpawn;
@@ -35,6 +38,7 @@ public class Spawner : MonoBehaviour
         }
     }
 
+    // Random spawn object near spawner
     private void spawnObject()
     {
         Vector3 randomPosition = new Vector3(Random.Range(-2, 2), Random.Range(-1, 1), Random.Range(-3, 3));

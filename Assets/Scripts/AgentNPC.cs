@@ -32,6 +32,11 @@ public class AgentNPC : Agent
         ApplyRootRotation();
         rBody.velocity = moveDir * speed;
 
+        // Punish for redundant steps
+        //AddReward(-0.02f);
+
+        // Check if agent is out from it's environment
+        // TODO: Change, refactor, eliminate. Tryed collisionExit with Plane
         if (transform.localPosition.y < 0)
         {
             SetReward(-1.0f);
@@ -55,17 +60,45 @@ public class AgentNPC : Agent
             rBody.velocity = Vector3.zero;
         }
 
-        //transform.localPosition = new Vector3(0, 0.5f, 0);
+        //spawn to safeHouse location
         transform.localPosition = safeHouse;
     }
 
     private void OnCollisionEnter(Collision collision)
     {
+        // collision with goal/ pickup/ apple
         if (collision.gameObject.TryGetComponent<Goal>(out Goal goal))
         {
+            // Spawn new pickup, destroy old one
+            // TODO: need to refactor interaction in medium future
+            NotifySpawner(collision.gameObject);
+            Destroy(collision.gameObject);
+
             AddReward(0.5f);
             EndEpisode();
         }
+        // collision with player
+        if (collision.gameObject.TryGetComponent<Player>(out Player player))
+        {
+            AddReward(-0.5f);
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        // Collision with plane
+        if (collision.gameObject.TryGetComponent<MeshCollider>(out MeshCollider mesh))
+        {
+            SetReward(-1f);
+            EndEpisode();
+        }
+    }
+
+    // TODO: need to refactor interaction in medium future
+    private void NotifySpawner(GameObject goal)
+    {
+        Spawner parentSpawner = goal.transform.parent.GetComponent<Spawner>();
+        parentSpawner.addCurrentNumberSpawn(-1);
     }
 
     private void ApplyRootRotation()
