@@ -9,12 +9,15 @@ public class Goal : MonoBehaviour
     [SerializeField] private float endSize;
     private float currentTime = 0;
     private float curentSize;
-    private Rigidbody rigidbody;
+    private Rigidbody rigidBody;
+    private bool hadExitSpawn = false;
+    private GameObject parent;
     // Start is called before the first frame update
     void Start()
     {
         transform.localScale = initialSize * new Vector3(1, 1, 1);
-        rigidbody = GetComponent<Rigidbody>();
+        rigidBody = GetComponent<Rigidbody>();
+        parent = transform.parent.gameObject;
     }
 
     // Update is called once per frame
@@ -27,9 +30,23 @@ public class Goal : MonoBehaviour
             if (currentTime >= timeToGrow)
             {
                 curentSize = endSize;
-                rigidbody.useGravity = true;
+                rigidBody.useGravity = true;
             }
             transform.localScale = curentSize * new Vector3(1, 1, 1);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Spawner") && GameObject.ReferenceEquals(other.gameObject, parent))
+        {
+            if(hadExitSpawn == true)
+            {
+                return;
+            }
+            Debug.Log("exit");
+            hadExitSpawn = true;
+            parent.GetComponent<Spawner>().addCurrentNumberSpawn(-1);
         }
     }
 }

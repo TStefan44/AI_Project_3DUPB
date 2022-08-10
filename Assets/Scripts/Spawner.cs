@@ -38,6 +38,20 @@ public class Spawner : MonoBehaviour
     private void spawnObject()
     {
         Vector3 randomPosition = new Vector3(Random.Range(-2, 2), Random.Range(-1, 1), Random.Range(-3, 3));
-        Instantiate(objectToSpawn, transform.position + randomPosition, objectToSpawn.transform.rotation);
+        Instantiate(objectToSpawn, transform.position + randomPosition, objectToSpawn.transform.rotation, transform);
+        Debug.Log("Object Spawned");
+    }
+
+    public void addCurrentNumberSpawn(int num)
+    {
+        curentNumberOfObjectsToSpawn += num;
+        if (curentNumberOfObjectsToSpawn > numberOfObjectsToSpawn)
+        {
+            curentNumberOfObjectsToSpawn = numberOfObjectsToSpawn;
+        }
+        if (curentNumberOfObjectsToSpawn < 0)
+        {
+            curentNumberOfObjectsToSpawn = 0;
+        }
     }
 }
