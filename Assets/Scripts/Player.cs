@@ -19,6 +19,11 @@ public class Player : MonoBehaviour
     Animator animator;
     CapsuleCollider capsule;
     bool isGrounded = true;
+
+    // Var added for random environment
+    private bool trainingMove = false;
+    private ManageEnvironment manager;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,12 +32,17 @@ public class Player : MonoBehaviour
         animator = GetComponent<Animator>();
         capsule = GetComponent<CapsuleCollider>();
         initPos = transform.position;
+
+        manager = transform.parent.GetComponent<ManageEnvironment>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        GetMoveDir();
+        if (trainingMove == false)
+            GetMoveDir();
+        else
+            moveDir = manager.GetMoveDir(transform.localPosition);
 
         SetAnimatorMoveParams();
 
@@ -105,5 +115,27 @@ public class Player : MonoBehaviour
         //Vector3 newVel = moveDir * moveSpeed;
         Vector3 newVel = animator.deltaPosition / Time.deltaTime * moveSpeed;
         rigidbody.velocity = new Vector3(newVel.x, velY, newVel.z);
+    }
+    
+    //----------------------------------------------------------------------------
+    // Functions for random environment
+
+    public void SetTrainingMove(bool trainingMove)
+    {
+        this.trainingMove = trainingMove;
+    }
+
+    public bool GetTrainingMove()
+    {
+        return trainingMove;
+    }
+
+    public void OnTriggerEnter(Collider other)
+    {
+        if (trainingMove == true && other.gameObject.CompareTag("Finish"))
+        {
+            if (other.gameObject.GetComponent<MeshRenderer>().enabled == true)
+                manager.nextCheckpoint();
+        }
     }
 }

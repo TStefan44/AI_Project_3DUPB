@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5111828795393128931}
   m_Layer: 0
   m_Name: Tree
-  m_TagString: Untagged
+  m_TagString: Tree
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -131,7 +131,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectToSpawn: {fileID: 2932102711906898980, guid: ca299d52042c6e844a15cbd118adaf52,
     type: 3}
-  numberOfObjectsToSpawn: 1
+  numberOfObjectsToSpawn: 3
   timeToSpawn: 8
 --- !u!65 &5111828796061511718
 BoxCollider:

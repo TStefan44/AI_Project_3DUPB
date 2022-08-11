@@ -907,6 +907,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 572303492727287877, guid: 2a7a2d6621ec115478f1ac06f53eeb80,
         type: 3}
+      propertyPath: moveSpeed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 572303492727287877, guid: 2a7a2d6621ec115478f1ac06f53eeb80,
+        type: 3}
       propertyPath: cameraTransform
       value: 
       objectReference: {fileID: 527786772}
@@ -979,6 +984,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_ObservableAttributeHandling
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5060258283810008376, guid: 2a7a2d6621ec115478f1ac06f53eeb80,
+        type: 3}
+      propertyPath: randomEpisode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5060258283810008378, guid: 2a7a2d6621ec115478f1ac06f53eeb80,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -4.97
+      objectReference: {fileID: 0}
+    - target: {fileID: 5060258283810008378, guid: 2a7a2d6621ec115478f1ac06f53eeb80,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 3.11
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2a7a2d6621ec115478f1ac06f53eeb80, type: 3}
