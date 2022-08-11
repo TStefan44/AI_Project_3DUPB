@@ -23,10 +23,13 @@ public class Goal : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // In tree, fruit is growing proportionaly with time
         if (currentTime < timeToGrow)
         {
             currentTime += Time.deltaTime;
             curentSize = currentTime * endSize / timeToGrow;
+
+            // maximum size reached, activate gravity
             if (currentTime >= timeToGrow)
             {
                 curentSize = endSize;
@@ -38,6 +41,7 @@ public class Goal : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        // Collision with parent spawner
         if (other.gameObject.CompareTag("Spawner") && GameObject.ReferenceEquals(other.gameObject, parent))
         {
             if(hadExitSpawn == true)

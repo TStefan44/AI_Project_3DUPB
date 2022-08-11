@@ -131,8 +131,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectToSpawn: {fileID: 2932102711906898980, guid: ca299d52042c6e844a15cbd118adaf52,
     type: 3}
-  numberOfObjectsToSpawn: 3
-  timeToSpawn: 2
+  numberOfObjectsToSpawn: 1
+  timeToSpawn: 8
 --- !u!65 &5111828796061511718
 BoxCollider:
   m_ObjectHideFlags: 0
