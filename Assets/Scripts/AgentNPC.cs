@@ -7,16 +7,18 @@ using Unity.MLAgents.Actuators;
 
 public class AgentNPC : Agent
 {
-    private Rigidbody rBody;
     [SerializeField] private float rotSpeed = 5f;
-    const float joystickActiveTolerance = 3f * 10e-3f;
     [SerializeField] private float speed;
     [SerializeField] private Vector3 safeHouse;
+    private ManageEnvironment manager;
     private Vector3 moveDir;
+    private Rigidbody rBody;
+    const float joystickActiveTolerance = 3f * 10e-3f;
     // Start is called before the first frame update
     void Start()
     {
         rBody = GetComponent<Rigidbody>();
+        manager = transform.parent.GetComponent<ManageEnvironment>();
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -53,7 +55,10 @@ public class AgentNPC : Agent
 
     public override void OnEpisodeBegin()
     {
+        manager.BeginNewEpisode();
+
         // If the Agent fell, zero its momentum
+        // TODO: Change, refactor, eliminate. Tryed collisionExit with Plane
         if (this.transform.localPosition.y < 0)
         {
             rBody.angularVelocity = Vector3.zero;
@@ -74,13 +79,14 @@ public class AgentNPC : Agent
             NotifySpawner(collision.gameObject);
             Destroy(collision.gameObject);
 
-            AddReward(0.5f);
+            SetReward(1f);
             EndEpisode();
         }
         // collision with player
         if (collision.gameObject.TryGetComponent<Player>(out Player player))
         {
             AddReward(-0.5f);
+            Debug.Log("Player collision!");
         }
     }
 
@@ -110,5 +116,15 @@ public class AgentNPC : Agent
         Quaternion targetRot = Quaternion.LookRotation(lookDir, Vector3.up);
         float rotSlerpFactor = Mathf.Clamp01(rotSpeed * Time.deltaTime);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, rotSlerpFactor);
+    }
+
+    public Vector3 GetSafeHouse()
+    {
+        return safeHouse;
+    }
+
+    public void SetSafeHouse(Vector3 safeHouse)
+    {
+        this.safeHouse = safeHouse;
     }
 }
