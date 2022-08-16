@@ -86,6 +86,7 @@ public class AgentNPC : Agent
         if (collision.gameObject.TryGetComponent<Player>(out Player player))
         {
             AddReward(-0.5f);
+            Debug.Log("Player collision!");
         }
     }
 

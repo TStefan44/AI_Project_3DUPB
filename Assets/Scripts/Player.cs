@@ -42,7 +42,7 @@ public class Player : MonoBehaviour
         if (trainingMove == false)
             GetMoveDir();
         else
-            moveDir = manager.GetMoveDir(transform.localPosition);
+            moveDir = manager.GetMoveDir(transform.position);
 
         SetAnimatorMoveParams();
 

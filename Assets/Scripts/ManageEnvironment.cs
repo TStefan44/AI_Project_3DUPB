@@ -118,7 +118,7 @@ public class ManageEnvironment : MonoBehaviour
     // TODO: Not working, need repair.
     public Vector3 GetMoveDir(Vector3 currentPos)
     {
-        Vector3 moveDir = checkpoints[currentCheckpoint].transform.localPosition - currentPos;
+        Vector3 moveDir = checkpoints[currentCheckpoint].transform.position - currentPos;
         moveDir = Vector3.ProjectOnPlane(moveDir, Vector3.up);
         return moveDir.normalized;
     }
@@ -127,11 +127,8 @@ public class ManageEnvironment : MonoBehaviour
     public void nextCheckpoint()
     {
         checkpoints[currentCheckpoint].GetComponent<MeshRenderer>().enabled = false;
-        currentCheckpoint++;
+        //currentCheckpoint++;
+        currentCheckpoint = (currentCheckpoint + 1) % checkpoints.Count;
         checkpoints[currentCheckpoint].GetComponent<MeshRenderer>().enabled = true;
-        if (currentCheckpoint >= checkpoints.Count)
-        {
-            currentCheckpoint = 0;
-        }
     }
 }

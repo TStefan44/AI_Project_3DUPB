@@ -1573,7 +1573,7 @@ MonoBehaviour:
   offsetTree: 2
   offsetAgent: 5
   randomEpisode: 25
-  playerTrainingMove: 0
+  playerTrainingMove: 1
 --- !u!1 &4129848339850597758
 GameObject:
   m_ObjectHideFlags: 0
@@ -2041,7 +2041,7 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 1
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 0}
+  m_Model: {fileID: 5022602860645237092, guid: ab06f882d399e264592f4078b3412df6, type: 3}
   m_InferenceDevice: 0
   m_BehaviorType: 0
   m_BehaviorName: Collect
