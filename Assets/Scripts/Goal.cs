@@ -7,6 +7,7 @@ public class Goal : MonoBehaviour
     [SerializeField] private float timeToGrow;
     [SerializeField] private float initialSize;
     [SerializeField] private float endSize;
+    [SerializeField] private float timeToRot;
     private float currentTime = 0;
     private float curentSize;
     private Rigidbody rigidBody;
@@ -24,7 +25,7 @@ public class Goal : MonoBehaviour
     void Update()
     {
         // In tree, fruit is growing proportionaly with time
-        if (currentTime < timeToGrow)
+        if (!hadExitSpawn && currentTime < timeToGrow)
         {
             currentTime += Time.deltaTime;
             curentSize = currentTime * endSize / timeToGrow;
@@ -34,8 +35,19 @@ public class Goal : MonoBehaviour
             {
                 curentSize = endSize;
                 rigidBody.useGravity = true;
+                hadExitSpawn = true;
+                currentTime = 0;
             }
             transform.localScale = curentSize * new Vector3(1, 1, 1);
+        }
+        if (hadExitSpawn && currentTime < timeToRot)
+        {
+            currentTime += Time.deltaTime;
+            if (currentTime >= timeToRot)
+            {
+                parent.GetComponent<Spawner>().addCurrentNumberSpawn(-1);
+                Destroy(gameObject);
+            }
         }
     }
 
@@ -44,12 +56,14 @@ public class Goal : MonoBehaviour
         // Collision with parent spawner
         if (other.gameObject.CompareTag("Spawner") && GameObject.ReferenceEquals(other.gameObject, parent))
         {
-            if(hadExitSpawn == true)
+            if (hadExitSpawn == true)
             {
                 return;
             }
+            // The program doesn't execute this usually
             Debug.Log("exit");
             hadExitSpawn = true;
+            currentTime = 0;
             parent.GetComponent<Spawner>().addCurrentNumberSpawn(-1);
         }
     }
