@@ -79,13 +79,13 @@ public class AgentNPC : Agent
             NotifySpawner(collision.gameObject);
             Destroy(collision.gameObject);
 
-            SetReward(1f);
+            AddReward(1f);
             EndEpisode();
         }
         // collision with player
         if (collision.gameObject.TryGetComponent<Player>(out Player player))
         {
-            AddReward(-0.5f);
+            AddReward(-1f);
             Debug.Log("Player collision!");
         }
     }

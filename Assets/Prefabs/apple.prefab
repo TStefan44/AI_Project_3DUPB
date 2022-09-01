@@ -101,6 +101,7 @@ MonoBehaviour:
   timeToGrow: 15
   initialSize: 1
   endSize: 25
+  timeToRot: 10
 --- !u!54 &8496281362288482672
 Rigidbody:
   m_ObjectHideFlags: 0

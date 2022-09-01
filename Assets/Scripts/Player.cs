@@ -8,12 +8,12 @@ public class Player : MonoBehaviour
     public float moveSpeed = 3f;
     public float rotSpeed = 5f;
     public float jumpPower = 5f;
-    public float groundedThreshold = .15f;
+    public float groundedThreshold = .10f; // Initially, .15f
     public float minimumRespawnY = -50f;
     const float joystickActiveTolerance = 3f * 10e-3f;
 
     Vector3 initPos;
-    Vector3 moveDir;
+    Vector3 moveDir; // World space?
 
     Rigidbody rigidbody;
     Animator animator;
@@ -81,7 +81,10 @@ public class Player : MonoBehaviour
         }
 
         if (transform.position.y < minimumRespawnY)
+        {
             transform.position = initPos;
+            rigidbody.velocity = new Vector3(0, 0, 0);
+        }
     }
 
     private void ApplyRootRotation()
@@ -116,7 +119,25 @@ public class Player : MonoBehaviour
         Vector3 newVel = animator.deltaPosition / Time.deltaTime * moveSpeed;
         rigidbody.velocity = new Vector3(newVel.x, velY, newVel.z);
     }
-    
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        // collision with goal/ pickup/ apple
+        if (collision.gameObject.TryGetComponent<Goal>(out Goal goal))
+        {
+            // Spawn new pickup, destroy old one
+            // TODO: need to refactor interaction in medium future
+            NotifySpawner(collision.gameObject);
+            Destroy(collision.gameObject);
+        }
+    }
+
+    private void NotifySpawner(GameObject goal)
+    {
+        Spawner parentSpawner = goal.transform.parent.GetComponent<Spawner>();
+        parentSpawner.addCurrentNumberSpawn(-1);
+    }
+
     //----------------------------------------------------------------------------
     // Functions for random environment
 
